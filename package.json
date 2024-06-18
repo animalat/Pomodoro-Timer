@@ -1,0 +1,18 @@
+{
+  "name": "pomodoro-timer",
+  "version": "1.0.0",
+  "description": "A timer",
+  "main": "main.js",
+  "scripts": {
+  "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "Pomodoro-Timer"
+  },
+  "author": "nakshayan",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.0.1"
+  }
+}
