@@ -9,17 +9,45 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    width: 100px;
     position: fixed;
     z-index: 2;
     background-color: #b8c0ff;
     overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 50px;
+    padding-top: 90px;
     box-shadow: 0 5px 25px #bdb8ff;
+}
+
+.sidebar.close {
+    width: 0px;
 }
 
 .sidebar a {
     font-family: "Lato", sans-serif;
     font-size: 2em;
+    padding: 8px 24px 8px 24px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidebar a:hover {
+    color: #818181;
+  }
+
+  .toggle-btn {
+    position: absolute;
+    padding: 8px 24px 8px 24px;
+    font-size: 60px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #f1f1f1;
+    z-index: 3;
+    transition: 0.3s;
+}
+
+.toggle-btn:hover {
+    color: #818181;
 }
