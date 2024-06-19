@@ -1,3 +1,13 @@
+const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime) => {
+    let settings = {
+        totalWorkTime: totalWorkTime,
+        totalBreakTime: totalBreakTime,
+        currentTotalTime: currentTotalTime,
+        isWorkTime: isWorkTime
+    };
+    localStorage.setItem('user-settings', JSON.stringify(settings));
+}
+
 /**
  * Initializes and starts a timer with specified work and break durations.
  * @param {number} workTimeMinutes - The work time (minutes remaining)).
@@ -32,6 +42,7 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
         const minutes = Math.floor(timeRemaining / 60);
         const seconds = timeRemaining % 60;
         updateDisplay(seconds, minutes);
+        saveSettings(totalWorkTime, totalBreakTime, currentTotalTime(), isWorkTime);
 
         if (timeRemaining > 0) {
             timeRemaining--;
@@ -66,5 +77,5 @@ const sideBarFunctionality = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     sideBarFunctionality();
-    // timerDisplay(1, 0, 5, 0, 4);
+    timerDisplay(1, 0, 5, 0, 4);
 });
