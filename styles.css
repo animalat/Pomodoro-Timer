@@ -1,3 +1,7 @@
+:root {
+    --stroke-dashoffset: 0;
+}
+
 body {
     background-color: #bbd0ff;
     font-family: "Lato", sans-serif;
@@ -50,4 +54,59 @@ body {
 
 .toggle-btn:hover {
     color: #818181;
+}
+
+.timer {
+    width: 160px;
+    height: 160px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-75%, -75%);
+}
+
+.outer-circle {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 6px 6px 10px -1px #bdb8ff,
+                -6px -6px 10px -1px #e0dff7;
+}
+
+.inner-circle {
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 6px 6px 10px -1px #bdb8ff,
+                inset -6px -6px 10px -1px #e0dff7,
+                -0.5px -0.5px 0px #f1f0ff,
+                0.5px 0.5px 0px #bdb8ff,
+                0px 12px 10px -10px #beb8ff;
+}
+
+#timer-text {
+    font-size: 2em;
+    font-weight: 600px;
+    color: #f1f1f1;
+}
+
+circle {
+    fill: none;
+    stroke: url(#GradientColor);
+    stroke-width: 30px;
+    stroke-dasharray: 659.734457;
+    stroke-dashoffset: var(--stroke-dashoffset);
+}
+
+svg {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }

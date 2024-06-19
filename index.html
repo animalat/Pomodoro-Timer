@@ -20,6 +20,24 @@
         <a href="timer-settings.html">Settings</a>
     </div>
 
+    <div class="timer">
+        <div class="outer-circle">
+            <div class="inner-circle">
+                <div class="timer-text" id="timer-text">25:00</div>
+            </div>
+        </div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="240px" height="240px">
+        <defs>
+           <linearGradient id="GradientColor">
+              <stop offset="0%" stop-color="#c8b6ff" />
+              <stop offset="100%" stop-color="#e7c6ff" />
+           </linearGradient>
+        </defs>
+        <circle cx="120" cy="120" r="105" stroke-linecap="round" />
+    </svg>
+
     <script src="renderer.js"></script>
 </body>
 </html>

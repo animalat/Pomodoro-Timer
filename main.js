@@ -13,6 +13,8 @@ function createWindow() {
   mainWindow.loadFile('index.html');
 
   mainWindow.setMenu(null);
+  
+  mainWindow.webContents.openDevTools();
 }
 
 app.on('ready', createWindow);
