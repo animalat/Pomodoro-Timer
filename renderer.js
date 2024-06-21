@@ -1,4 +1,6 @@
+const { clear } = require('console');
 const fs = require('fs');
+const { start } = require('repl');
 
 const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime, timeRemaining, totalCycles) => {
     let settings = {
@@ -23,6 +25,55 @@ const loadSettings = () => {
     }
 };
 
+const startStopButton = document.getElementById("start-button");
+const resetButton = document.getElementById("reset-button");
+
+let timerRunning = false;
+let timerInterval = null;
+
+const startTimer = () => {
+    if (!timerRunning) {
+        timerRunning = true;
+        startStopButton.textContent = "Pause";
+        resetButton.style.opacity = '1';
+        resetButton.style.cursor = 'pointer';
+        loadSettings();
+    }
+};
+
+const pauseTimer = () => {
+    if (timerRunning) {
+        clearInterval(timerInterval); // Assuming timerInterval is your setInterval ID for the timer
+        timerRunning = false;
+        startStopButton.textContent = "Resume";
+    }
+};
+
+const resetTimer = () => {
+    if (timerInterval !== null) {
+        clearInterval(timerInterval);
+    }
+
+    timerRunning = false;
+    startStopButton.textContent = "Start";
+    
+    const settings = JSON.parse(localStorage.getItem("user_settings"));
+    settings.timeRemaining = settings.currentTotalTime;
+    saveSettings(
+        settings.totalWorkTime, 
+        settings.totalBreakTime, 
+        () => settings.totalWorkTime, 
+        settings.isWorkTime, 
+        settings.timeRemaining, 
+        settings.totalCycles
+    );
+    document.querySelector('.timer').classList.remove('fade-in');
+    document.querySelector('circle').classList.remove('fade-in');
+    
+    resetButton.style.opacity = 0;
+    resetButton.style.cursor = 'default';
+};
+
 /**
  * Initializes and starts a timer with specified work and break durations.
  * @param {number} workTimeMinutes - The work time (minutes remaining)).
@@ -42,7 +93,8 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
     
     const updateDisplay = (seconds, minutes) => {
         timerText.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        document.documentElement.style.setProperty('--visibility', 'visible');
+        document.querySelector('.timer').classList.add('fade-in');
+        document.querySelector('circle').classList.add('fade-in');
 
         const totalTimeRemaining = seconds + minutes * 60;
         const circumference = 2 * Math.PI * 105;
@@ -55,7 +107,7 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
         timeRemaining = currentTotalTime();
     }
 
-    const timer = setInterval(() => {
+    timerInterval = setInterval(() => {
         const minutes = Math.floor(timeRemaining / 60);
         const seconds = timeRemaining % 60;
         updateDisplay(seconds, minutes);
@@ -69,7 +121,7 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
                 totalCycles--;
             }
             if (totalCycles === 0) {
-                clearInterval(timer);
+                clearInterval(timerInterval);
                 timerText.textContent = "0:00";
                 return;
             }
@@ -78,21 +130,48 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
     }, 1000);
 }
 
-// Toggles the sidebar.
-const toggleSidebar = () => {
-    document.querySelector('.sidebar').classList.toggle('close');
-}
-
 // Toggles sidebar when toggle-btn is clicked. Starts with sidebar closed.
 const sideBarFunctionality = () => {
+    const toggleSidebar = () => {
+        document.querySelector('.sidebar').classList.toggle('close');
+    }
+
     // Toggle at first.
     toggleSidebar();
-    document.getElementById('toggle-btn').addEventListener('click', () => {
+
+    document.getElementById('toggle-btn').addEventListener('click', (event) => {
         toggleSidebar();
+        event.stopPropagation(); // Prevents the click from propagating to the document level when the button is clicked.
+    });
+
+    document.addEventListener('click', (event) => {
+        const sidebar = document.querySelector('.sidebar');
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isSidebarOpen = !sidebar.classList.contains('close');
+
+        if (isSidebarOpen && !isClickInsideSidebar) {
+            toggleSidebar();
+        }
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadSettings();
+    startStopButton.addEventListener('click', () => {
+        if (timerRunning) {
+            console.log('Pausing timer');
+            pauseTimer();
+        } else {
+            console.log('Starting timer');
+            startTimer();
+        }
+    });
+
+    resetButton.addEventListener('click', () => {
+        if (resetButton.style.opacity === '1') {
+            console.log('Resetting timer');
+            resetTimer();
+        }
+    });
+
     sideBarFunctionality();
 });

@@ -1,6 +1,5 @@
 :root {
     --stroke-dashoffset: 0;
-    --visibility: hidden;
 }
 
 body {
@@ -93,9 +92,8 @@ body {
 
 #timer-text {
     font-size: 2em;
-    font-weight: 600px;
+    font-weight: 600;
     color: #f1f1f1;
-    visibility: var(--visibility);
 }
 
 circle {
@@ -111,4 +109,54 @@ svg {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+.timer, circle {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+.regular-button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    display: block;
+    width: 200px;
+    height: 50px;
+    margin: 0 auto; /* Center the button */
+    font-family: "Lato", sans-serif;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 25px; /* Rounded edges */
+    background-color: #d1c2ff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+  
+  .regular-button:hover {
+    background-color: #c8b6ff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+  .regular-button:active {
+    background-color: #d1c2ff; /* Revert to the original background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Maintain the original box-shadow */
+}
+
+  #start-button {
+    bottom: calc(50% - 200px);
+}
+
+  #reset-button {
+    bottom: calc(50% - 275px);
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    cursor: default;
 }
