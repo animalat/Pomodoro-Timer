@@ -2,6 +2,14 @@ const { clear } = require('console');
 const fs = require('fs');
 const { start } = require('repl');
 
+/**
+ * @param {number} totalWorkTime - The total work time in minutes.
+ * @param {number} totalBreakTime - The total break time in minutes.
+ * @param {function} currentTotalTime - A function that returns the current total time in seconds.
+ * @param {boolean} isWorkTime - Whether the timer is currently in work time.
+ * @param {number} timeRemaining - The time remaining in the current cycle.
+ * @param {number} totalCycles - The total number of cycles to complete.
+*/
 const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime, timeRemaining, totalCycles) => {
     let settings = {
         totalWorkTime,
@@ -80,6 +88,9 @@ const resetTimer = () => {
  * @param {number} workTimeSeconds - The work time (seconds remaining).
  * @param {number} breakTimeMinutes - The break time (minutes remaining).
  * @param {number} breakTimeSeconds - The break time (seconds remaining).
+ * @param {number} totalCycles - The total number of cycles to complete.
+ * @param {number} timeRemaining - The time remaining in the current cycle.
+ * @param {boolean} isWorkTime - Whether the timer is currently in work time.
  */
 const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakTimeSeconds, totalCycles, timeRemaining = null, isWorkTime = true) => {
     let totalWorkTime = workTimeMinutes * 60 + workTimeSeconds;
@@ -130,31 +141,6 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
     }, 1000);
 }
 
-// Toggles sidebar when toggle-btn is clicked. Starts with sidebar closed.
-const sideBarFunctionality = () => {
-    const toggleSidebar = () => {
-        document.querySelector('.sidebar').classList.toggle('close');
-    }
-
-    // Toggle at first.
-    toggleSidebar();
-
-    document.getElementById('toggle-btn').addEventListener('click', (event) => {
-        toggleSidebar();
-        event.stopPropagation(); // Prevents the click from propagating to the document level when the button is clicked.
-    });
-
-    document.addEventListener('click', (event) => {
-        const sidebar = document.querySelector('.sidebar');
-        const isClickInsideSidebar = sidebar.contains(event.target);
-        const isSidebarOpen = !sidebar.classList.contains('close');
-
-        if (isSidebarOpen && !isClickInsideSidebar) {
-            toggleSidebar();
-        }
-    });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     startStopButton.addEventListener('click', () => {
         if (timerRunning) {
@@ -172,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resetTimer();
         }
     });
-
+    
+    const { sideBarFunctionality } = require('./sidebar.js');
     sideBarFunctionality();
 });
