@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime) => {
     let settings = {
         totalWorkTime: totalWorkTime,
@@ -5,7 +7,10 @@ const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTim
         currentTotalTime: currentTotalTime,
         isWorkTime: isWorkTime
     };
-    localStorage.setItem('user-settings', JSON.stringify(settings));
+    
+    fs.writeFile("user_settings.json", JSON.stringify(settings), (err) => {
+        if (err) throw err;
+    });
 }
 
 /**
