@@ -1,17 +1,27 @@
 const fs = require('fs');
 
-const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime) => {
+const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime, timeRemaining, totalCycles) => {
     let settings = {
-        totalWorkTime: totalWorkTime,
-        totalBreakTime: totalBreakTime,
-        currentTotalTime: currentTotalTime,
-        isWorkTime: isWorkTime
+        totalWorkTime,
+        totalBreakTime,
+        currentTotalTime: currentTotalTime(),
+        isWorkTime,
+        timeRemaining,
+        totalCycles
     };
     
-    fs.writeFile("user_settings.json", JSON.stringify(settings), (err) => {
-        if (err) throw err;
-    });
-}
+    localStorage.setItem("user_settings", JSON.stringify(settings));
+};
+
+const loadSettings = () => {
+    const settings = JSON.parse(localStorage.getItem("user_settings"));
+    if (settings) {
+        timerDisplay(settings.totalWorkTime / 60, settings.totalWorkTime % 60, settings.totalBreakTime / 60, settings.totalBreakTime % 60, settings.totalCycles, settings.timeRemaining, settings.isWorkTime);
+    } else {
+        // Default settings.
+        timerDisplay(25, 0, 5, 0, 4);
+    }
+};
 
 /**
  * Initializes and starts a timer with specified work and break durations.
@@ -20,10 +30,9 @@ const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTim
  * @param {number} breakTimeMinutes - The break time (minutes remaining).
  * @param {number} breakTimeSeconds - The break time (seconds remaining).
  */
-const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakTimeSeconds, totalCycles) => {
+const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakTimeSeconds, totalCycles, timeRemaining = null, isWorkTime = true) => {
     let totalWorkTime = workTimeMinutes * 60 + workTimeSeconds;
     let totalBreakTime = breakTimeMinutes * 60 + breakTimeSeconds;
-    let isWorkTime = true;
 
     const timerText = document.getElementById("timer-text");
 
@@ -33,6 +42,7 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
     
     const updateDisplay = (seconds, minutes) => {
         timerText.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        document.documentElement.style.setProperty('--visibility', 'visible');
 
         const totalTimeRemaining = seconds + minutes * 60;
         const circumference = 2 * Math.PI * 105;
@@ -41,13 +51,15 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
         document.documentElement.style.setProperty('--stroke-dashoffset', strokeDashOffset);
     };
 
-    let timeRemaining = currentTotalTime();
+    if (timeRemaining === null) {
+        timeRemaining = currentTotalTime();
+    }
 
     const timer = setInterval(() => {
         const minutes = Math.floor(timeRemaining / 60);
         const seconds = timeRemaining % 60;
         updateDisplay(seconds, minutes);
-        saveSettings(totalWorkTime, totalBreakTime, currentTotalTime(), isWorkTime);
+        saveSettings(totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime, timeRemaining, totalCycles);
 
         if (timeRemaining > 0) {
             timeRemaining--;
@@ -81,6 +93,6 @@ const sideBarFunctionality = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    loadSettings();
     sideBarFunctionality();
-    timerDisplay(1, 0, 5, 0, 4);
 });
