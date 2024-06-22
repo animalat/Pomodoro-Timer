@@ -42,19 +42,33 @@ const resetButton = document.getElementById("reset-button");
 let timerRunning = false;
 let timerInterval = null;
 
+let currentAudio = new Audio();
+
+const playTimerSound = () => {
+    if (!currentAudio.paused) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+    }
+
+    const cycleCompleteSound = new Audio('./assets/alert.mp3');
+    currentAudio = cycleCompleteSound;
+    cycleCompleteSound.play();
+};
+
 const startTimer = () => {
     if (!timerRunning) {
         timerRunning = true;
         startStopButton.textContent = "Pause";
         resetButton.style.opacity = '1';
         resetButton.style.cursor = 'pointer';
+        playTimerSound();
         loadSettings();
     }
 };
 
 const pauseTimer = () => {
     if (timerRunning) {
-        clearInterval(timerInterval); // Assuming timerInterval is your setInterval ID for the timer
+        clearInterval(timerInterval);
         timerRunning = false;
         startStopButton.textContent = "Resume";
     }
@@ -136,6 +150,7 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
         if (timeRemaining > 0) {
             timeRemaining--;
         } else {
+            playTimerSound();
             isWorkTime = !isWorkTime;
             if (isWorkTime && cyclesRemaining > 0) {
                 cyclesRemaining--;

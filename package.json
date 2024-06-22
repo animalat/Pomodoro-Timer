@@ -4,7 +4,8 @@
   "description": "A timer",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -13,9 +14,29 @@
   "author": "nakshayan",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^31.0.1"
+    "electron": "^31.0.1",
+    "electron-builder": "^24.13.3"
   },
   "dependencies": {
     "@electron/remote": "^2.1.2"
+  },
+  "build": {
+    "appId": "io.github.nakshayan.pomodorotimer",
+    "productName": "Pomodoro Timer",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "./assets/timer_icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "./assets/timer_icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "./assets/timer_icon.png"
+    }
   }
 }
