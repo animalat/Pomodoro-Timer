@@ -10,3 +10,7 @@ npx electron-builder --win --mac --linux
 npm run build -- -mwl
 ```
 Change above commands based on your operating system.
+
+Recommended time settings:
+25 minute work, 5 minute break (Pomodoro Technique by Francesco Cirillo)
+52 minute work, 17 minute break (52/17 Rule)
