@@ -5,8 +5,9 @@
   </p
   <br /><br />
 Requirements:
-electron
-electron-builder
+- electron
+
+- electron-builder
 <br /><br />
 
 To install:
