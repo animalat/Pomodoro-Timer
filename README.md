@@ -20,6 +20,6 @@ Change above commands based on your operating system. <br /> <br />
 
 Recommended time settings:
 
-- 25 minute work, 5 minute break (Pomodoro Technique by Francesco Cirillo)
+- 25 minute work, 5 minute break (Pomodoro Technique)
 
 - 52 minute work, 17 minute break (52/17 Rule)
