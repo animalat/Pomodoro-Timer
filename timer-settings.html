@@ -11,6 +11,14 @@
     />
 </head>
 <body>
+    <div id="title-bar">
+        <div id="title">Timer</div>
+        <div id="window-controls">
+          <button id="minimize-window">-</button>
+          <button id="close-window">x</button>
+        </div>
+    </div>
+
     <button class="toggle-btn" id="toggle-btn">
         &#9776;
     </button>
@@ -20,21 +28,29 @@
         <a href="timer-settings.html">Settings</a>
     </div>
 
-    
-    <div class="form-group">
-        <label for="workTime">Work Time (minutes):</label>
-        <input type="number" id="workTime" name="workTime" required>
+    <div class="settings-container">
+        <div class="form-group">
+            <label for="work-time">Work Time (minutes):</label>
+            <input type="number" id="work-time" name="work-time" required>
+        </div>
+        <div class="form-group">
+            <label for="break-time">Break Time (minutes):</label>
+            <input type="number" id="break-time" name="break-time" required>
+        </div>
+        <div class="form-group">
+            <label for="number-of-cycles">Number of Cycles:</label>
+            <input type="number" id="number-of-cycles" name="number-of-cycles" required>
+        </div>
+        <button id="submit-button" type="submit" class="regular-button">Save Settings</button>
     </div>
-    <div class="form-group">
-        <label for="breakTime">Break Time (minutes):</label>
-        <input type="number" id="breakTime" name="breakTime" required>
-    </div>
-    <div class="form-group">
-        <label for="numberOfCycles">Number of Cycles:</label>
-        <input type="number" id="numberOfCycles" name="numberOfCycles" required>
-    </div>
-    <button id="submit-button" type="submit" class="regular-button">Save Settings</button>
 
+    <div class="totals-container">
+        <p>Total Work Time: <span id="total-work-time">0</span> minutes</p>
+        <p>Total Break Time: <span id="total-break-time">0</span> minutes</p>
+        <p>Total Cycles: <span id="total-cycles">0</span></p>
+    </div>
+
+    <script src="preload.js"></script>
     <script src="settings.js"></script>
 </body>
 </html>

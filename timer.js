@@ -1,6 +1,7 @@
 const { clear } = require('console');
 const fs = require('fs');
 const { start } = require('repl');
+const path = require('path');
 
 /**
  * @param {number} totalWorkTime - The total work time in minutes.
@@ -8,15 +9,17 @@ const { start } = require('repl');
  * @param {function} currentTotalTime - A function that returns the current total time in seconds.
  * @param {boolean} isWorkTime - Whether the timer is currently in work time.
  * @param {number} timeRemaining - The time remaining in the current cycle.
+ * @param {number} cyclesRemaining - The total number of cycles left to complete.
  * @param {number} totalCycles - The total number of cycles to complete.
 */
-const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime, timeRemaining, totalCycles) => {
+const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime, timeRemaining, cyclesRemaining, totalCycles) => {
     let settings = {
         totalWorkTime,
         totalBreakTime,
         currentTotalTime: currentTotalTime(),
         isWorkTime,
         timeRemaining,
+        cyclesRemaining,
         totalCycles
     };
     
@@ -26,7 +29,7 @@ const saveSettings = (totalWorkTime, totalBreakTime, currentTotalTime, isWorkTim
 const loadSettings = () => {
     const settings = JSON.parse(localStorage.getItem("user_settings"));
     if (settings) {
-        timerDisplay(settings.totalWorkTime / 60, settings.totalWorkTime % 60, settings.totalBreakTime / 60, settings.totalBreakTime % 60, settings.totalCycles, settings.timeRemaining, settings.isWorkTime);
+        timerDisplay(settings.totalWorkTime / 60, settings.totalWorkTime % 60, settings.totalBreakTime / 60, settings.totalBreakTime % 60, settings.cyclesRemaining, settings.totalCycles, settings.timeRemaining, settings.isWorkTime);
     } else {
         // Default settings.
         timerDisplay(25, 0, 5, 0, 4);
@@ -57,6 +60,21 @@ const pauseTimer = () => {
     }
 };
 
+const resetSettings = () => {
+    const settings = JSON.parse(localStorage.getItem("user_settings"));
+    settings.timeRemaining = settings.currentTotalTime;
+    settings.cyclesRemaining = settings.totalCycles;
+    saveSettings(
+        settings.totalWorkTime, 
+        settings.totalBreakTime, 
+        () => settings.totalWorkTime, 
+        settings.isWorkTime, 
+        settings.timeRemaining, 
+        settings.totalCycles,
+        settings.totalCycles
+    );
+};
+
 const resetTimer = () => {
     if (timerInterval !== null) {
         clearInterval(timerInterval);
@@ -64,17 +82,7 @@ const resetTimer = () => {
 
     timerRunning = false;
     startStopButton.textContent = "Start";
-    
-    const settings = JSON.parse(localStorage.getItem("user_settings"));
-    settings.timeRemaining = settings.currentTotalTime;
-    saveSettings(
-        settings.totalWorkTime, 
-        settings.totalBreakTime, 
-        () => settings.totalWorkTime, 
-        settings.isWorkTime, 
-        settings.timeRemaining, 
-        settings.totalCycles
-    );
+    resetSettings();
     document.querySelector('.timer').classList.remove('fade-in');
     document.querySelector('circle').classList.remove('fade-in');
     
@@ -88,11 +96,12 @@ const resetTimer = () => {
  * @param {number} workTimeSeconds - The work time (seconds remaining).
  * @param {number} breakTimeMinutes - The break time (minutes remaining).
  * @param {number} breakTimeSeconds - The break time (seconds remaining).
+ * @param {number} cyclesRemaining - The total number of cycles to complete.
  * @param {number} totalCycles - The total number of cycles to complete.
  * @param {number} timeRemaining - The time remaining in the current cycle.
  * @param {boolean} isWorkTime - Whether the timer is currently in work time.
  */
-const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakTimeSeconds, totalCycles, timeRemaining = null, isWorkTime = true) => {
+const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakTimeSeconds, cyclesRemaining, totalCycles, timeRemaining = null, isWorkTime = true) => {
     let totalWorkTime = workTimeMinutes * 60 + workTimeSeconds;
     let totalBreakTime = breakTimeMinutes * 60 + breakTimeSeconds;
 
@@ -110,7 +119,7 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
         const totalTimeRemaining = seconds + minutes * 60;
         const circumference = 2 * Math.PI * 105;
         const strokeDashOffset = circumference - (totalTimeRemaining / currentTotalTime()) * circumference;
-        console.log(strokeDashOffset);
+        // console.log(strokeDashOffset);
         document.documentElement.style.setProperty('--stroke-dashoffset', strokeDashOffset);
     };
 
@@ -122,16 +131,16 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
         const minutes = Math.floor(timeRemaining / 60);
         const seconds = timeRemaining % 60;
         updateDisplay(seconds, minutes);
-        saveSettings(totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime, timeRemaining, totalCycles);
+        saveSettings(totalWorkTime, totalBreakTime, currentTotalTime, isWorkTime, timeRemaining, cyclesRemaining, totalCycles);
 
         if (timeRemaining > 0) {
             timeRemaining--;
         } else {
             isWorkTime = !isWorkTime;
-            if (isWorkTime) {
-                totalCycles--;
+            if (isWorkTime && cyclesRemaining > 0) {
+                cyclesRemaining--;
             }
-            if (totalCycles === 0) {
+            if (cyclesRemaining === 0) {
                 clearInterval(timerInterval);
                 timerText.textContent = "0:00";
                 return;
@@ -139,26 +148,31 @@ const timerDisplay = (workTimeMinutes, workTimeSeconds, breakTimeMinutes, breakT
             timeRemaining = isWorkTime ? totalWorkTime : totalBreakTime;
         }
     }, 1000);
-}
+};
 
-document.addEventListener('DOMContentLoaded', () => {
+const startStopButtonListen = () => {
     startStopButton.addEventListener('click', () => {
         if (timerRunning) {
-            console.log('Pausing timer');
+            // console.log('Pausing timer');
             pauseTimer();
         } else {
-            console.log('Starting timer');
+            // console.log('Starting timer');
             startTimer();
         }
     });
 
     resetButton.addEventListener('click', () => {
         if (resetButton.style.opacity === '1') {
-            console.log('Resetting timer');
+            // console.log('Resetting timer');
             resetTimer();
         }
     });
-    
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    startStopButtonListen();
     const { sideBarFunctionality } = require('./sidebar.js');
     sideBarFunctionality();
 });
+
+module.exports = { saveSettings, resetSettings };

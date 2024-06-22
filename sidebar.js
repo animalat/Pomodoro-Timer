@@ -4,7 +4,7 @@ const path = require('path');
 const sideBarFunctionality = () => {
     const toggleSidebar = () => {
         document.querySelector('.sidebar').classList.toggle('close');
-    }
+    };
 
     // Toggle at first.
     toggleSidebar();
@@ -23,11 +23,11 @@ const sideBarFunctionality = () => {
             toggleSidebar();
         }
     });
-}
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     sideBarFunctionality();
-    console.log('Sidebar page loaded');
+    // console.log('Sidebar page loaded');
 });
 
 module.exports = { sideBarFunctionality };

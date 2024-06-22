@@ -4,7 +4,7 @@
   "description": "A timer",
   "main": "main.js",
   "scripts": {
-  "start": "electron ."
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -14,5 +14,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^31.0.1"
+  },
+  "dependencies": {
+    "@electron/remote": "^2.1.2"
   }
 }
