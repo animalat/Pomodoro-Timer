@@ -5,10 +5,9 @@
   </p
   <br /><br />
 Requirements:
-```bash
 electron
 electron-builder
-``` <br /><br />
+<br /><br />
 
 To install:
 ```bash
