@@ -3,6 +3,12 @@
   <img src="https://drive.google.com/uc?export=view&id=1pIMeJzLQ5UL9v56cHhkKb-NtagEVshFq" alt="Pomodoro Timer Image" width="480" height=auto border="10" /><BR CLEAR=ALL />
   A customizable productivity timer.
   </p
+  <br /><br />
+Requirements:
+```bash
+electron
+electron-builder
+``` <br /><br />
 
 To install:
 ```bash
