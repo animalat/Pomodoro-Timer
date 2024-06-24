@@ -32,7 +32,7 @@ const loadSettings = () => {
         timerDisplay(settings.totalWorkTime / 60, settings.totalWorkTime % 60, settings.totalBreakTime / 60, settings.totalBreakTime % 60, settings.cyclesRemaining, settings.totalCycles, settings.timeRemaining, settings.isWorkTime);
     } else {
         // Default settings.
-        timerDisplay(25, 0, 5, 0, 4);
+        timerDisplay(25, 0, 5, 0, -1, -1, 25, true);
     }
 };
 
