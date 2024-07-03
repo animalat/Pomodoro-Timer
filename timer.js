@@ -82,7 +82,7 @@ const resetSettings = () => {
         settings.totalWorkTime, 
         settings.totalBreakTime, 
         () => settings.totalWorkTime, 
-        settings.isWorkTime, 
+        true, 
         settings.timeRemaining, 
         settings.totalCycles,
         settings.totalCycles
