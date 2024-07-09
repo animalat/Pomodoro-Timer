@@ -7,8 +7,13 @@
 Requirements:
 
 - electron
-
+```bash
+npm install
+```
 - electron-builder
+```bash
+npm install electron-builder --save-dev
+```
 <br /><br />
 
 To install:
