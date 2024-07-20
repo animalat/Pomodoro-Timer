@@ -21,7 +21,7 @@ To install:
 npx electron-builder --win --mac --linux
 npm run build -- -mwl
 ```
-Change above commands based on your operating system. <br /> <br />
+Change above commands based on your operating system. (i.e., if on Windows, include only --win for the first command and -w for the second) <br /> <br />
 
 Recommended time settings:
 
