@@ -3,7 +3,11 @@
   <img src="https://drive.google.com/uc?export=view&id=1pIMeJzLQ5UL9v56cHhkKb-NtagEVshFq" alt="Pomodoro Timer Image" width="480" height=auto border="10" /><BR CLEAR=ALL />
   A customizable productivity timer.
   </p
-  <br /><br />
+  <br />
+<a href="https://drive.google.com/file/d/184i1gVFo2V03V5vyP7mNxRMIGwDFCBIB/view?usp=sharing">Download Installer</a> <br /><br />
+
+Or alternatively, build the program yourself:
+
 Requirements:
 
 - electron
