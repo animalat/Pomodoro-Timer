@@ -22,7 +22,7 @@ npm install electron-builder --save-dev
 
 To install:
 ```bash
-npx electron-builder --win --mac --linux
+npx electron-builder --mac --win --linux
 npm run build -- -mwl
 ```
 Change above commands based on your operating system. (e.g., if on Windows, include only --win for the first command and -w for the second) <br /> <br />
