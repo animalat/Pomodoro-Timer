@@ -4,7 +4,7 @@
   A customizable productivity timer.
   </p
   <br />
-<a href="https://drive.google.com/file/d/184i1gVFo2V03V5vyP7mNxRMIGwDFCBIB/view?usp=sharing">Download Installer</a> <br /><br />
+<a href="https://drive.google.com/file/d/184i1gVFo2V03V5vyP7mNxRMIGwDFCBIB/view?usp=sharing">Download Installer (Windows)</a> <br /><br />
 
 Or alternatively, build the program yourself:
 
