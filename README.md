@@ -20,7 +20,7 @@ npm install electron-builder --save-dev
 ```
 <br /><br />
 
-To install:
+To install, navigate to a folder with a copy of the files in this repository, then:
 ```bash
 npx electron-builder --mac --win --linux
 npm run build -- -mwl
