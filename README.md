@@ -10,7 +10,7 @@
 
 Features:
 - 🕒 Customizable work/break durations
-- 🔔 Notification alerts between sessions
+- 🔔 Alerts between sessions (with gentle alert sounds to avoid being startled)
 - 🧠 Supports fully customizable cycles, including: Pomodoro Technique (25/5) and 52/17 Rule
 - 💻 Desktop app for Windows, macOS, and Linux
 
