@@ -6,23 +6,19 @@
 
 ---
 
-**Pomodoro Timer** is a minimalist, cross-platform productivity timer built with Electron. It supports fully customizable work/break intervals to help you stay focused and prevent burnout using time-management strategies like the **Pomodoro Technique** or the **52/17 Rule**.
+Pomodoro Timer is a minimalistic cross-platform productivity timer built with Electron. It supports customizable work/break intervals to help you stay focused and prevent burnout using time-management strategies like the Pomodoro Technique or the 52/17 Rule.
 
 Features:
-- 🕒 Customizable work/break durations
-- 🔔 Alerts between sessions (with gentle alert sounds to avoid being startled)
-- 🧠 Supports fully customizable cycles, including: Pomodoro Technique (25/5) and 52/17 Rule
-- 💻 Desktop app for Windows, macOS, and Linux
+- Customizable work/break durations
+- Alerts between sessions (with gentle alert sounds to avoid being startled)
+- Supports fully customizable cycles, including: Pomodoro Technique (25/5) and 52/17 Rule
+- Desktop app for Windows, macOS, and Linux
 
 ---
 
-### 🖥️ Try It
+- [**Download for Windows**](https://drive.google.com/file/d/184i1gVFo2V03V5vyP7mNxRMIGwDFCBIB/view?usp=sharing)
 
-- 📦 [**Download for Windows**](https://drive.google.com/file/d/184i1gVFo2V03V5vyP7mNxRMIGwDFCBIB/view?usp=sharing)
-
-> Or build it yourself:
-
-### ⚙️ Build Instructions
+### Build Instructions
 **Install dependencies:**
 
 ```bash
